@@ -7,57 +7,54 @@
         <script src="https://unpkg.com/vue/dist/vue.js"></script>
     </head>
     <body>
-        <div id="app1">
-            <h1 ref="heading">{{ title }}</h1>
-            <button v-on:click="show">Show Paragraph</button>
-            <p v-if="showParagraph">This is not always visible</p>
+        <div id="app">
+            <h1 ref="heading">{{title}}</h1>
+            <button @click="title = 'Changed'">Update Title</button>
+            <button @click="destroy">Destroy</button>
+            <p ref="paragraph">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia
+                tempore, quae explicabo id vitae beatae, officiis, iste alias
+                dolorem rem eius doloribus. Ducimus cum error vel voluptas
+                necessitatibus nisi accusantium!
+            </p>
         </div>
-        <div id="app2">
-            <h1 ref="heading">{{ title }}</h1>
-            <button @click="onChange">change something in vue1 instance</button>
-        </div>
-        <script>
-            const vm1 = new Vue({
-                el: '#app1',
-                data: {
-                    title: 'The VueJS Instance',
-                    showParagraph: false,
-                },
-                methods: {
-                    show: function () {
-                        this.showParagraph = true;
-                        this.updateTitle('The VueJS Instance (Updated)');
-                    },
-                    updateTitle: function (title) {
-                        this.title = title;
-                    },
-                },
-                computed: {
-                    lowercaseTitle: function () {
-                        return this.title.toLowerCase();
-                    },
-                },
-                watch: {
-                    title: function (value) {
-                        alert('Title changed, new value: ' + value);
-                    },
-                },
-            });
-            vm1.newProp = 'New!';
-            console.log(vm1);
-            setTimeout(function () {
-                vm1.title = 'Change by Timer';
-                vm1.show();
-            }, 3000);
 
-            const vm2 = new Vue({
-                el: '#app2',
-                data: {
-                    title: 'The second instance',
+        <script>
+            const data = {
+                title: 'Title Vue JS',
+                name: 'Arthur',
+                age: 40,
+            };
+            const vm = new Vue({
+                el: '#app',
+                data: data,
+                beforeCreate: function () {
+                    console.log('beforeCreate()');
+                },
+                created: function () {
+                    console.log('created()');
+                },
+                beforeMount: function () {
+                    console.log('beforeMount()');
+                },
+                mounted: function () {
+                    console.log('mounted()');
+                },
+                beforeUpdate: function () {
+                    console.log('beforeUpdate()');
+                },
+                updated: function () {
+                    console.log('updated()');
+                },
+                beforeDestroy: function () {
+                    console.log('beforeDestroy()');
+                },
+                destroyed: function () {
+                    console.log('destroyed()');
                 },
                 methods: {
-                    onChange: function () {
-                        vm1.title = 'CHANGED!';
+                    destroy: function () {
+                        this.$destroy();
                     },
                 },
             });
